@@ -1,0 +1,48 @@
+In a Laravel application, it's a common practice to point the web server's virtual host to the `public` directory to ensure that only the public files are accessible via the web. Here's an example of how to set up a virtual host for a Laravel application using XAMPP on Windows:
+
+1. **Create a New Virtual Host Configuration:**
+
+   - Open the `httpd-vhosts.conf` file located in the `extra` directory within your XAMPP installation directory (e.g., `C:\xampp\apache\conf\extra\httpd-vhosts.conf`).
+
+   - Add a new `<VirtualHost>` block for your Laravel application:
+
+     ```apache
+     <VirtualHost *:80>
+         DocumentRoot "C:/xampp/htdocs/laravel-app/public"
+         ServerName laravel.local
+         ServerAlias www.laravel.local
+         ErrorLog "logs/laravel.local-error.log"
+         CustomLog "logs/laravel.local-access.log" common
+     </VirtualHost>
+     ```
+
+     - `DocumentRoot`: This should point to the `public` directory of your Laravel application.
+     - `ServerName` and `ServerAlias`: Specify the domain name you want to use for your Laravel application.
+     - `ErrorLog` and `CustomLog`: These lines specify the log files for your virtual host.
+
+   - Save the `httpd-vhosts.conf` file.
+
+2. **Edit the Hosts File:**
+
+   - Open Notepad or any text editor with administrator privileges (run as administrator).
+
+   - Open the hosts file by going to `C:\Windows\System32\drivers\etc\hosts` (on Windows). You might need to choose "All Files" in the file dialog to see the hosts file.
+
+   - Add the following line to the hosts file, where `laravel.local` is the domain name you specified in the virtual host configuration:
+
+     ```
+     127.0.0.1 laravel.local
+     ```
+
+   - Save the hosts file.
+
+3. **Restart Apache:**
+
+   - Open the XAMPP Control Panel.
+   - Stop Apache and then start it again.
+
+4. **Test Your Laravel Application:**
+
+   - Open a web browser and type `http://laravel.local` or `http://www.laravel.local`. You should see your Laravel application served from the `public` directory.
+
+By configuring your virtual host to point to the `public` directory of your Laravel application, you ensure that only the public assets and routes are accessible via the web, enhancing the security of your application.
